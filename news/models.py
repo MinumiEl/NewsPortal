@@ -23,17 +23,22 @@ class Author(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Post(models.Model):
     objects = None
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='news',)
-    NEWS = 'NW'
-    ARTICLE = 'AR'
+    NEWS = 'news'
+    ARTICLE = 'article'
     CATEGORY_CHOICES = (
         (NEWS, 'Новость'),
         (ARTICLE, 'Статья'),
     )
-    categoryType = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=ARTICLE)
+
+    tip = 'articles' or 'news'
+    categoryType = models.CharField(max_length=10, choices=CATEGORY_CHOICES, default=ARTICLE)
     dateCreation = models.DateField(auto_now_add=True)
     postCategory = models.ManyToManyField(Category, through='PostCategory')
     title = models.CharField(max_length=128)
@@ -62,6 +67,9 @@ class Post(models.Model):
 class PostCategory(models.Model):
     postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
     categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    # def __str__(self):
+    #     return self.categoryThrough, self.postThrough
 
 
 class Comment(models.Model):

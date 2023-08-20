@@ -33,6 +33,27 @@
                <li class="nav-item">
                    <a class="nav-link" href="/news/">NewsPortal</a>
                </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="/news/search/">Search</a>
+               </li>
+               {% if perms.news.change_new or perms.news.delete_post %}
+               <li class="nav-item">
+                   <a class="nav-link" href="/articles/create/">Creat_Article</a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href="/news/create/">Creat_News</a>
+               </li>
+               {% endif %}
+               <li class="nav-item">
+                   <a class="nav-link" href=http://127.0.0.1:8000/accounts/login/>Вход в аккаунт</a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href=http://127.0.0.1:8000/accounts/logout/>Выход с аккаунта</a>
+               </li>
+               <li class="nav-item">
+                   <a class="nav-link" href=http://127.0.0.1:8000/accounts/signup/>Регистрация</a>
+               </li>
+
 
            </ul>
        </div>
