@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.urls import reverse
 
 
 class Author(models.Model):
@@ -22,6 +23,7 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
+    subscribers = models.ManyToManyField(User, through='Subscription')
 
     def __str__(self):
         return self.name
@@ -63,6 +65,9 @@ class Post(models.Model):
         dataf = 'Post from {}'.format(self.dateCreation.strftime('%d.%m.%Y %H:%M'))
         return f"{dataf},{self.author},{self.title}"
 
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
+
 
 class PostCategory(models.Model):
     postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -89,9 +94,6 @@ class Comment(models.Model):
 
 
 class Subscription(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    name = models.ForeignKey(Post, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.category}: {self.subscriber}'
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscriptions')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subscriptions')
+    title = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='subscriptions', default=1)

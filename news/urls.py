@@ -6,7 +6,7 @@ from .views import PostList, PostsDetail, Search, ArticleUpdate, ArticleDelete, 
 urlpatterns = [
    path('', PostList.as_view()),
    path('news/', PostList.as_view()),
-   path('post/<int:pk>/', PostsDetail.as_view()),
+   path('post/<int:pk>/', PostsDetail.as_view(), name='post_detail'),
    path('news/search/', Search.as_view(), name='search'),
    path('news/create/', views.NewsCreate.as_view(), name='news_create'),
    path('news/<int:pk>/edit/', NewsUpdate.as_view(), name='news_edit'),
