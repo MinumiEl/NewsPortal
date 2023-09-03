@@ -15,6 +15,10 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .models import Subscription, Category
 
+from django.http import HttpResponse
+from django.views import View
+
+
 
 class PostList(ListView):
     model = Post
@@ -160,3 +164,5 @@ def subscriptions(request):
         'subscriptions.html',
         {'categories': categories_with_subscriptions},
     )
+
+

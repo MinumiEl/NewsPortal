@@ -170,3 +170,10 @@ ADMINS = (
 APSCHEDULER_DATETIME_FORMAT = 'N j, Y, f:s a'
 APSCHEDULER_RUN_NOW_TIMEOUT = 25
 SITE_URL = 'http://127.0.0.1:8000'
+
+CELERY_BROKER_URL = f'redis://default:SWNGZuERrOpVZRPplNAxF2Q8xLbTzuNs@redis-17110.c299.asia-northeast1-1.gce.cloud.redislabs.com:17110'
+CELERY_RESULT_BACKEND = f'redis://default:SWNGZuERrOpVZRPplNAxF2Q8xLbTzuNs@redis-17110.c299.asia-northeast1-1.gce.cloud.redislabs.com:17110'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Moscow'
