@@ -9,6 +9,8 @@ from .forms import NewsForm, ArticleForm
 from .models import Post, Category
 from .filters import PostFilter
 
+from django.views.decorators.cache import cache_page
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef
 from django.shortcuts import render
@@ -18,7 +20,19 @@ from .models import Subscription, Category
 from django.http import HttpResponse
 from django.views import View
 
+from django.core.cache import cache  # импортируем наш кэш
 
+
+class PostDetailView(DetailView):
+    template_name = 'sample_app/post_detail.html'
+    queryset = Post.objects.all()
+    def get_object(self, *args, **kwargs):  # переопределяем метод получения объекта, как ни странно
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)  # кэш очень похож на словарь, и метод get действует так же. Он забирает значение по ключу, если его нет, то забирает None.
+        # если объекта нет в кэше, то получаем его и записываем в кэш
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+            return obj
 
 class PostList(ListView):
     model = Post
