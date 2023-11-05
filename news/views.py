@@ -22,6 +22,15 @@ from django.views import View
 
 from django.core.cache import cache  # импортируем наш кэш
 
+import logging
+
+logger = logging.getLogger(__name__)
+
+def index(request):
+    logger.info('INFO')
+    news = Post.objects.all()
+    return render(request, 'index.html', context={'news': news})
+
 
 class PostDetailView(DetailView):
     template_name = 'sample_app/post_detail.html'
